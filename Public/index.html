@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <link rel="stylesheet" href="css/style.css">
+<head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Mi lista de Tareas</h1>
+            <p>Gestiona tus tareas diarias de forma eficiente</p>
+        </header>
+
+        <div class="add-task-form">
+            <h2>Agregar nueva tarea</h2>
+            <form id="taskForm">
+                <div class="form-group">
+                    <label for="taskTitle">Título de la tarea:</label>
+                    <input type="text" id="titulo" name="titulo" required>
+                </div>
+                <div class="form-group">
+                    <label for="taskDescription">Descripción:</label>
+                    <textarea id="descripcion" name="descripcion" required></textarea>
+                </div>
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="completada" name="completada">
+                    <label for="completada">¿Completada?</label>                    
+                </div>
+                <button type="submit">Agregar Tarea</button>
+            </form>
+        </div>
+
+        <div class="filters">
+            <h2>Filtrar Tareas</h2>
+            <button id="allTaks" class="filter-tbn active"> Todas</button>
+            <button id="pendingTasks" class="filter-tbn"> Pendientes</button>
+            <button id="completedTasks" class="filter-tbn"> Completadas</button>
+        </div>
+
+        <div class="task-list">
+            <h2>Mis Tareas <span id="taksCount">(0)</span></h2>
+            <div id="taksList" class="taks-list">
+                <!-- Las tareas se agregarán aquí dinámicamente -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para editar tarea -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Editar Tareas</h2>
+            <form id="editForm">
+                <input type="hidden" id="editId">
+                <div class="form-group">
+                    <label for="editTitle">Título de la tarea:</label>
+                    <input type="text" id="editTitulo" name="titulo" required>
+                </div>
+                <div class="form-group">
+                    <label for="editDescription">Descripción:</label>
+                    <textarea id="editDescripcion" name="descripcion" rows="3"></textarea>
+                </div>
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="editCompletada" name="completada">
+                    <label for="editCompletada">¿Completada?</label>
+                </div>
+                <button type="submit">Guardar Cambios</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

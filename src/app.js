@@ -1,9 +1,9 @@
 const express = require('express');
 const path = require('path');
-
 const cors = require('cors'); 
  require('dotenv').config(); 
- 
+ const tareasRoutes = require('./routes/tareasRoutes');
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -19,8 +19,6 @@ app.use(express.static(path.join(__dirname, '../public')));
 app.use(cors()); //Habilitar CORS para todas las rutas
 app.use(express.json()); //Para parsear el body de las peticiones como JSON
 
-//Importamos las rutas
-const tareasRoutes = require('./routes/tareasRoutes');
 
 //configuracion de las rutas
 app.use('/api/tareas', tareasRoutes);

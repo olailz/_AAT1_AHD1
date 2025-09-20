@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     //Funcion para cargar tareas
     function loadTasks() {
-        let url = 'http://localhost:3000/api/tareas/';
+        let url = 'https://aat1-ahd1.onrender.com/api/tareas';
 
         if (currentFilter === 'pendingTasks') {
             url += '?completada=false';
@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', function () {
             completada,
         };
 
-        fetch('http://localhost:3000/api/tareas', {
+        fetch('https://aat1-ahd1.onrender.com/api/tareas', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -209,7 +209,7 @@ document.addEventListener('DOMContentLoaded', function () {
             completada
         };
 
-        fetch(`http://localhost:3000/api/tareas/${id}`, {
+        fetch(`https://aat1-ahd1.onrender.com/api/tareas/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -241,7 +241,7 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        fetch(`http://localhost:3000/api/tareas/${id}`, {
+        fetch(`https://aat1-ahd1.onrender.com/api/tareas/${id}`, {
             method: 'DELETE'
         })
             .then(response => {

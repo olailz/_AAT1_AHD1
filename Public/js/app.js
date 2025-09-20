@@ -164,7 +164,7 @@ document.addEventListener('DOMContentLoaded', function () {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(updatedTask)
+            body: JSON.stringify(newTask)
         })
             .then(response => {
                 if (!response.ok) {

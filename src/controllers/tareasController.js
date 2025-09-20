@@ -110,7 +110,7 @@ const deleteTarea = async (req, res) => {
     }
 };
 
-Module.exports = {
+module.exports = {
     getTareas,
     getTareaById,
     createTarea,

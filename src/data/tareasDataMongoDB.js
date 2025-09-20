@@ -1,3 +1,4 @@
+/* require('dotenv').config();  */
 const mongo = require('mongoose');
 
 //Definir el esquema de tareas
@@ -16,20 +17,20 @@ const tareasSchema = new mongo.Schema({
 const Tareas = mongo.model('tareas', tareasSchema);
 
 //Conexion a MongoDB
-const conectarDB =  async () => {
-    try{
-        const MONGODB_CON = process.env.MONGODB_CONEXION;
-        
-    await mongo.connect(MONGODB_URI, {
-      dbName: process.env.DB_NAME 
-    });
+//Conexión a MongoDB
+const conectarDB = async () => {
+    try {
+        const MONGODB_URI = process.env.MONGODB_CONNECTION;
 
-    console.log('Conectado a MongoDB Atlas');
-  } 
-  catch (error) {
-    console.error('Error conectando a MongoDB: ', error.message);
-  }
-};
+        await mongo.connect(MONGODB_URI, {
+            dbName: process.env.DB_NAME
+        });
+
+        console.log(`Conectado a MongoDB`);
+    } catch (error) {
+        console.error(`Error de conexión a MongoDB`, error.message);
+    }
+}
 
 //funcion para obtener todas las tareas
 

@@ -1,8 +1,8 @@
 #Dependencias
 node_modules
 
-src/controllers_tmp
+src/controllers/tareasController copy.js
 
-src/data/tareasData copyjs.
+src/data/tareasData copy.js
 src/data/tareasData.js
 src/app copy.js

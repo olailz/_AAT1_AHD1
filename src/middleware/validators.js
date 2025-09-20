@@ -3,8 +3,9 @@ const mongoose = require('mongoose')
 
 //Middleware para validar ObJectId de MongoDB
 const validarTareaId = (req, res, next) => {
-    const id = parseInt(req.params.id);
-    if (isNaN(id)) {
+    const id = (req.params.id);
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(400).json({ error: 'El ID de la tarea debe ser un número válido.' });
     }
     req.tareaId = id;

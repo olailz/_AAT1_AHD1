@@ -28,16 +28,9 @@ document.addEventListener('DOMContentLoaded', function () {
     //Filtros
     filterButtons.forEach(button => {
         button.addEventListener('click', function () {
-            //Quitar la clase active de todos los botones
             filterButtons.forEach(btn => btn.classList.remove('active'));
-
-            //Agregar clase active al boton clickeado
             this.classList.add('active');
-
-            //Establecer filtro actual
             currentFilter = this.id;
-
-            //Recargar tareas con el filtro aplicado
             loadTasks();
         });
     });
@@ -54,9 +47,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         fetch(url)
             .then(response => {
-                if (!response.ok) {
-                    throw new Error("Error al cargar las tareas");
-                }
+                if (!response.ok) throw new Error("Error al cargar las tareas");
                 return response.json();
             })
             .then(data => {
@@ -124,7 +115,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const deleteBtn = document.createElement('button');
         deleteBtn.className = 'btn-delete';
         deleteBtn.textContent = 'Eliminar';
-        deleteBtn.addEventListener('click', () => deleteTask(task.id));
+        deleteBtn.addEventListener('click', () => deleteTask(task._id)); // 🔹 USAR _id
 
         actions.appendChild(editBtn);
         actions.appendChild(deleteBtn);
@@ -153,29 +144,19 @@ document.addEventListener('DOMContentLoaded', function () {
         const descripcion = document.getElementById('descripcion').value.trim();
         const completada = document.getElementById('completada').checked;
 
-        const newTask = {
-            titulo,
-            descripcion,
-            completada,
-        };
+        const newTask = { titulo, descripcion, completada };
 
         fetch('https://aat1-ahd1.onrender.com/api/tareas', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(newTask)
         })
             .then(response => {
-                if (!response.ok) {
-                    return response.json().then(err => {
-                        throw new Error(err.error)  });
-                }
+                if (!response.ok) return response.json().then(err => { throw new Error(err.error) });
                 return response.json();
             })
-            .then(data => {
+            .then(() => {
                 alert('Tarea creada exitosamente');
-                modal.style.display = 'none';
                 loadTasks();
             })
             .catch(error => {
@@ -186,11 +167,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     //Abrir modal de edicion
     function openEditModal(task) {
-        document.getElementById('editId').value = task.id;
+        document.getElementById('editId').value = task._id; // 🔹 USAR _id
         document.getElementById('editTitulo').value = task.titulo;
         document.getElementById('editDescripcion').value = task.descripcion || '';
         document.getElementById('editCompletada').checked = task.completada;
-
         modal.style.display = 'block'
     }
 
@@ -198,33 +178,23 @@ document.addEventListener('DOMContentLoaded', function () {
     function handleEditTask(e) {
         e.preventDefault();
 
-        const id = document.getElementById('editId').value;
+        const id = document.getElementById('editId').value; // 🔹 ahora usa _id
         const titulo = document.getElementById('editTitulo').value.trim();
         const descripcion = document.getElementById('editDescripcion').value.trim();
         const completada = document.getElementById('editCompletada').checked;
 
-        const updatedTask = {
-            titulo,
-            descripcion,
-            completada
-        };
+        const updatedTask = { titulo, descripcion, completada };
 
         fetch(`https://aat1-ahd1.onrender.com/api/tareas/${id}`, {
             method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(updatedTask)
         })
             .then(response => {
-                if (!response.ok) {
-                    return response.json().then(err => {
-                        throw new Error(err.error);
-                    })
-                }
+                if (!response.ok) return response.json().then(err => { throw new Error(err.error) });
                 return response.json();
             })
-            .then(data => {
+            .then(() => {
                 alert('Tarea actualizada exitosamente');
                 modal.style.display = 'none';
                 loadTasks();
@@ -236,29 +206,21 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     //Eliminar tarea
-    function deleteTask(id) {
-        if (!confirm('¿Estás seguro de que quieres eliminar esta tarea?')) {
-            return;
-        }
+   function deleteTask(id) {
+    if (!confirm('¿Estás seguro de que quieres eliminar esta tarea?')) return;
 
-        fetch(`https://aat1-ahd1.onrender.com/api/tareas/${id}`, {
-            method: 'DELETE'
+    fetch(`https://aat1-ahd1.onrender.com/api/tareas/${id}`, { method: 'DELETE' })
+        .then(response => {
+            if (!response.ok) return response.json().then(err => { throw new Error(err.error) });
+            return response.json();
         })
-            .then(response => {
-                if (!response.ok) {
-                    return response.json().then(err => {
-                        throw new Error(err.error);
-                    });
-                }
-                return response.json();
-            })
-            .then(data => {
-                alert('Tarea eliminada exitosamente');
-                loadTasks();
-            })
-            .catch(error => {
-                console.error('Error: ', error);
-                alert(`Error al eliminar la tarea: ${error.message}`);
-            })
-    }
+        .then(() => {
+            alert('Tarea eliminada exitosamente');
+            loadTasks();
+        })
+        .catch(error => {
+            console.error('Error: ', error);
+            alert(`Error al eliminar la tarea: ${error.message}`);
+        })
+}
 });

@@ -6,7 +6,8 @@ const validarTareaId = (req, res, next) => {
     const id = (req.params.id);
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(400).json({ error: 'El ID de la tarea debe ser un número válido.' });
+        return res.status(400).json({
+             error: 'El ID de la tarea debe ser un número válido.' });
     }
     req.tareaId = id;
     next();
@@ -30,8 +31,21 @@ const validarDatosTarea = (req, res, next) => {
     next();
 };
 
+const deleteTarea = async (req, res) => {
+    try {
+        const tareaEliminada = await eliminarTarea(req.tareaId); // 🔹 req.tareaId
+        if (!tareaEliminada) {
+            return res.status(404).json({ error: 'Tarea no encontrada' });
+        }
+        res.json({ mensaje: 'Tarea eliminada exitosamente' });
+    } catch (error) {
+        res.status(500).json({ error: 'Error al eliminar la tarea' });
+    }
+}
+
 module.exports = {
     validarTareaId,
     validarDatosTarea,
+    deleteTarea
 };
 

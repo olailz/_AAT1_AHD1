@@ -94,21 +94,21 @@ const updateTarea = async (req, res) => {
 
 //Eliminar tarea 
 const deleteTarea = async (req, res) => {
-    try{
-        const tareaEliminada = await eliminarTarea(req.id);
+    try {
+        const tareaEliminada = await eliminarTarea(req.params.id);
 
         if (!tareaEliminada){
-            return res.status(404).json({ error: 'Tarea no encontrada'});
+            return res.status(404).json({ error: 'Tarea no encontrada' });
         }
+
         res.json({
             message: 'Tarea eliminada exitosamente',
             tarea: tareaEliminada
         });
+    } catch (error){
+        res.status(500).json({ error: 'Error al eliminar la tarea' });
     }
-    catch (error){
-        res.status(500).json({ error: 'Error al eliminar la tarea'});
-    }
-};
+};;
 
 module.exports = {
     getTareas,

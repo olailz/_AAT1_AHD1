@@ -16,7 +16,6 @@ const tareasSchema = new mongo.Schema({
 
 const Tareas = mongo.model('tareas', tareasSchema);
 
-//Conexion a MongoDB
 //Conexión a MongoDB
 const conectarDB = async () => {
     try {
